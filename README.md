@@ -1,13 +1,13 @@
-# coinsloot-ui-lib
+# react-ipfs
 
-> CoinsLoot user interface library
+> IPFS helper hooks for React JS project
 
-[![NPM](https://img.shields.io/npm/v/coinsloot-ui.svg)](https://www.npmjs.com/package/coinsloot-ui) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/coinsloot-ui.svg)](https://www.npmjs.com/package/react-ipfs) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-npm install --save coinsloot-ui-lib
+npm install react-ipfs
 ```
 
 ## License
