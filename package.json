@@ -1,0 +1,89 @@
+{
+  "version": "0.1.25",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "react-ipfs",
+  "author": "Roman Yankowski",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/youaresoroman/react-ipfs.git"
+  },
+  "keywords": [
+    "React",
+    "Component",
+    "Library",
+    "Rollup",
+    "Typescript",
+    "User Interface",
+    "Storybook",
+    "IPFS"
+  ],
+  "bugs": {
+    "url": "https://github.com/youaresoroman/react-ipfs/issues"
+  },
+  "homepage": "https://github.com/youaresoroman/react-ipfs#readme",
+  "module": "dist/react-ipfs.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/react-ipfs.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/react-ipfs.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@size-limit/preset-small-lib": "^5.0.1",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
+    "autoprefixer": "^10.3.1",
+    "babel-loader": "^8.2.2",
+    "husky": "^7.0.1",
+    "react": "17.0.2",
+    "react-dom": "^17.0.2",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-scss": "^3.0.0",
+    "size-limit": "^5.0.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "ipfs": "^0.55.4"
+  }
+}
