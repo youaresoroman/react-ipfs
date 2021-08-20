@@ -4,9 +4,7 @@ import { useState } from "react";
 import uint8ArrayConcat from "uint8arrays/concat";
 import { useIPFS } from "..";
 
-export const readFileFromIPFS = async (cid: string): Promise<[ipfsFileData | null, Error | null]> => {
-
-    const { ipfs } = useIPFS();
+export const readFileFromIPFS = async (ipfs: any, cid: string): Promise<[ipfsFileData | null, Error | null]> => {
 
     return new Promise((resolve) => {
         try {
@@ -37,9 +35,7 @@ export const readFileFromIPFS = async (cid: string): Promise<[ipfsFileData | nul
     })
 }
 
-export const listDirectoryIPFS = async (path: string): Promise<[IpfsFile[] | null, Error | null]> => {
-
-    const { ipfs } = useIPFS();
+export const listDirectoryIPFS = async (ipfs: any, path: string): Promise<[IpfsFile[] | null, Error | null]> => {
 
     return new Promise((resolve) => {
 
@@ -324,29 +320,36 @@ export const useIpfsFolderState = (path: string): {
     const write = (fileName: string, content: Uint8Array | ArrayBuffer | string | Blob): Promise<[string | null, Error | null]> => {
         return new Promise((resolve) => {
             const file = `${path}${fileName}`
-            ipfs.files.write(file, content, {
-                parents: true,
-                create: true
-            })
-                .then(() => {
-                    ipfs.files.stat(path)
-                        .then(async (data: any) => {
-                            setFolderHash(data?.cid.string)
+            rm(file)
+                .then(([res, err]) => {
+                    if (res) {
+                        ipfs.files.write(file, content, {
+                            parents: true,
+                            create: true
+                        })
+                            .then(() => {
+                                ipfs.files.stat(path)
+                                    .then(async (data: any) => {
+                                        setFolderHash(data?.cid.string)
 
-                            ipfs.files.stat(file)
-                                .then(async (data: any) => {
-                                    resolve([data?.cid.string, null])
-                                })
-                                .catch((error: Error) => {
-                                    resolve([null, error]);
-                                })
-                        })
-                        .catch((error: Error) => {
-                            resolve([null, error]);
-                        })
-                })
-                .catch((error: Error) => {
-                    resolve([null, error]);
+                                        ipfs.files.stat(file)
+                                            .then(async (data: any) => {
+                                                resolve([data?.cid.string, null])
+                                            })
+                                            .catch((error: Error) => {
+                                                resolve([null, error]);
+                                            })
+                                    })
+                                    .catch((error: Error) => {
+                                        resolve([null, error]);
+                                    })
+                            })
+                            .catch((error: Error) => {
+                                resolve([null, error]);
+                            })
+                    } else {
+                        resolve([null, err]);
+                    }
                 })
         })
 
