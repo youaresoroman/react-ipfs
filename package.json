@@ -1,5 +1,5 @@
 {
-  "version": "0.2.2",
+  "version": "0.2.4",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -82,6 +82,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "ipfs": "^0.55.4"
+    "ipfs": "^0.55.4",
+    "react-context-hook": "^3.0.7"
   }
 }
