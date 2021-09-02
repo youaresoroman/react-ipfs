@@ -2,8 +2,8 @@
 
 > IPFS helper hooks for React JS project
 
-[![NPM](https://img.shields.io/npm/v/coinsloot-ui.svg)](https://www.npmjs.com/package/react-ipfs) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-
+![GitHub top language](https://img.shields.io/github/languages/top/youaresoroman/react-ipfs)
+ ![npm](https://img.shields.io/npm/dw/react-ipfs) ![David](https://img.shields.io/david/youaresoroman/react-ipfs) ![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/youaresoroman/react-ipfs/ipfs) ![Matrix](https://img.shields.io/matrix/ipfs-awesome:matrix.org?server_fqdn=matrix.org)  
 ## Install
 
 ```bash
