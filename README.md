@@ -22,7 +22,7 @@ npm install react-ipfs
 yarn add react-ipfs
 ```
 ## Documentation
-TSDoc compiled documentation is [here](./docs)
+TSDoc compiled documentation is [here](https://youaresoroman.github.io/react-ipfs/)
 ## Contribute
 
 Please see the [contributing guidelines](./CONTRIBUTING.md)
