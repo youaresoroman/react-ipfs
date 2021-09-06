@@ -1,16 +1,13 @@
 import IPFS from "ipfs-core/src/components"
 import { API } from "ipfs-core-types/src/files"
-import {concat} from "uint8arrays"
-//import { File } from "ipfs-core-types/src/root"
+import { concat } from "uint8arrays"
+import { IPFSEntry } from "ipfs-core-types/src/root"
 
-export type IpfsFile = {
-    name: string,
-    type: "file" | "dir";
-    size: number;
-    hash: string;
-}
+/**
+ * Class for easy operation with Uin8Array data
+ */
 
-export class ipfsFileData {
+ export class IPFSFileData {
     content: Uint8Array;
 
     constructor(content: Uint8Array) {
@@ -44,21 +41,15 @@ export class IPFSDecorator {
         this.files = this.original.files
     }
 
-    ls = async (path: string): Promise<[IpfsFile[] | null, Error | null]> => {
+    ls = async (path: string): Promise<[IPFSEntry[] | null, Error | null | unknown]> => {
         return new Promise((resolve) => {
 
             try {
                 (async () => {
                     try {
-                        const list: IpfsFile[] = []
+                        const list: IPFSEntry[] = []
                         for await (const file of this.original.ls(path)) {
-                            const { name, type, size, cid } = file
-                            list.push({
-                                name,
-                                type,
-                                size,
-                                hash: cid.toString()
-                            })
+                            list.push(file)
                         }
                         resolve([list, null])
                     } catch (error) {
@@ -72,7 +63,7 @@ export class IPFSDecorator {
         })
     }
 
-    read = async (cid: string): Promise<[ipfsFileData | null, Error | null]> => {
+    read = async (cid: string): Promise<[IPFSFileData | null, Error | null | unknown]> => {
         return new Promise((resolve) => {
             try {
                 (async () => {
@@ -81,7 +72,7 @@ export class IPFSDecorator {
                         for await (const chunk of this.original.cat(cid)) {
                             content.push(chunk)
                         }
-                        resolve([new ipfsFileData(concat(content)), null])
+                        resolve([new IPFSFileData(concat(content)), null])
                     } catch (error) {
                         resolve([null, error])
                     }

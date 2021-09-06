@@ -1,15 +1,28 @@
+<div align="center">
+
 # react-ipfs
 
-> IPFS helper hooks for React JS project
+React IPFS instance hooks for easier usage in your DAPPS
 
-![GitHub top language](https://img.shields.io/github/languages/top/youaresoroman/react-ipfs)
- ![npm](https://img.shields.io/npm/dw/react-ipfs) ![David](https://img.shields.io/david/youaresoroman/react-ipfs) ![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/youaresoroman/react-ipfs/ipfs) ![Matrix](https://img.shields.io/matrix/ipfs-awesome:matrix.org?server_fqdn=matrix.org)  
-## Install
+
+ ![npm](https://img.shields.io/npm/dw/react-ipfs) ![David](https://img.shields.io/david/youaresoroman/react-ipfs) ![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/youaresoroman/react-ipfs/ipfs) ![GitHub top language](https://img.shields.io/github/languages/top/youaresoroman/react-ipfs) ![NPM](https://img.shields.io/npm/l/react-ipfs) ![Matrix](https://img.shields.io/matrix/ipfs-awesome:matrix.org?server_fqdn=matrix.org)
+
+ </div>
+
+## Installation
+
+### npm
 
 ```bash
 npm install react-ipfs
 ```
 
-## License
+### yarn
+```bash
+yarn add react-ipfs
+```
+## Documentation
+TSDoc compiled documentation is [here](./docs)
+## Contribute
 
-MIT © [youaresoroman](https://github.com/youaresoroman)
+Please see the [contributing guidelines](./CONTRIBUTING.md)

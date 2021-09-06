@@ -15,8 +15,9 @@
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "prepare": "npm run doc && tsdx build",
     "size": "size-limit",
+    "doc": "./node_modules/.bin/typedoc --out docs src --exclude index.ts",
     "analyze": "size-limit --why"
   },
   "peerDependencies": {
@@ -79,6 +80,7 @@
     "size-limit": "^5.0.1",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.0",
+    "typedoc": "^0.21.9",
     "typescript": "^4.3.5",
     "uint8arrays": "^3.0.0"
   },

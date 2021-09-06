@@ -1,46 +1,86 @@
-
-import { useEffect } from "react";
-import { useState } from "react";
+import Ipfs from "ipfs"
+import IPFS from "ipfs-core/src/components"
+import { useEffect, useState } from "react";
+import { useStore } from "react-context-hook";
+import { ipfsInstance } from "../index.types";
+import { ipfsInstanceDecorator } from "../index.types"
+import { IPFSDecorator } from "../classes"
+import { MFSEntry } from "ipfs-core-types/src/files";
+import { IPFSFileData } from "../classes";
 import { concat } from "uint8arrays";
-import { useIPFS } from "..";
 
-export type IpfsFile = {
-    name: string,
-    type: string;
-    size: number;
-    hash: string;
+let ipfs: IPFS | null = null
+
+export const startIPFSInstance = (verbose: "silent" | "info" | "full" = "info") => {
+    const [isIpfsReady, setIpfsReady] = useState(Boolean(ipfs))
+    const [,setInstance] = useStore('ipfsInstance', {
+        ipfs: undefined,
+        isIpfsReady: false
+    }) as ipfsInstance;
+
+    useEffect(() => {
+        startIpfs()
+        return function cleanup() {
+            if (ipfs && ipfs.stop) {
+                verbose == "info" || verbose == "full" ? console.log("Stopping IPFS") : null
+                ipfs.stop().catch((error: Error) => verbose == "full" ? console.log(`%c${error}`,"color:red") : null)
+                ipfs = null
+                setIpfsReady(false)
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        if (ipfs) {
+            setInstance({
+                ipfs,
+                isIpfsReady
+            })
+        }
+    }, [isIpfsReady])
+
+    const startIpfs = async () => {
+        if (!ipfs) {
+            try {
+                verbose == "info" || verbose == "full" ? console.log("%cIPFS Started", "color: green"): null
+                ipfs = await Ipfs.create()
+            } catch (error) {
+                ipfs = null
+                verbose == "full" ? console.log(`%c${error}`,"color:red") : null
+            }
+        }
+
+        setIpfsReady(Boolean(ipfs))
+    }
+
+    return
 }
-export class ipfsFileData {
-    content: Uint8Array;
 
-    constructor(content: Uint8Array) {
-        this.content = content
-    }
+export function useIPFS() {
+    const [ipfs, setIPFS] = useState<IPFSDecorator>()
+    const [isIpfsReady, setIpfsReady] = useState(false)
+    const [instance] = useStore('ipfsInstance', {
+        ipfs: undefined,
+        isIpfsReady: false
+    }) as ipfsInstanceDecorator;
 
-    toString() {
-        const decode = new TextDecoder()
-        return decode.decode(this.content)
-    }
+    useEffect(() => {
+        if (instance.isIpfsReady && instance.ipfs) {
+            setIPFS(new IPFSDecorator(instance.ipfs))
+            setIpfsReady(instance.isIpfsReady)
+        }
+    }, [instance])
 
-    toJSON() {
-        return JSON.parse(this.toString())
-    }
-
-    toBlob() {
-        return new Blob([this.content])
-    }
-
-    toObjectURL() {
-        return URL.createObjectURL(this.toBlob())
-    }
+    return { ipfs, isIpfsReady }
 }
+
 
 export const useIPFSFolderState = (path: string): [
     string,
     {
-        ls: (path?: string) => Promise<[IpfsFile[] | null, Error | null]>,
+        ls: (path?: string) => Promise<[MFSEntry[] | null, Error | null | unknown]>,
         getHash: (path: string) => Promise<[string | null, Error | null]>,
-        read: (path: string) => Promise<[ipfsFileData | null, Error | null]>,
+        read: (path: string) => Promise<[IPFSFileData | null, Error | null]>,
         write: (fileName: string, content: string | Uint8Array | Blob | AsyncIterable<Uint8Array> | Iterable<Uint8Array>) => Promise<[string | null, Error | null]>,
         writeAll: (list: { fileName: string, content: string | Uint8Array | Blob | AsyncIterable<Uint8Array> | Iterable<Uint8Array> }[]) => Promise<[boolean, Error | null]>,
         rm: (path?: string) => Promise<[boolean | null, Error | null]>,
@@ -83,7 +123,7 @@ export const useIPFSFolderState = (path: string): [
     }, [isIpfsReady])
 
 
-    const read = async (pathToRead: string): Promise<[ipfsFileData | null, Error | null]> => {
+    const read = async (pathToRead: string): Promise<[IPFSFileData | null, Error | null]> => {
         return new Promise((resolve) => {
             const actualPath = `${path}${pathToRead}`
             if (isIpfsReady && ipfs) {
@@ -93,7 +133,7 @@ export const useIPFSFolderState = (path: string): [
                         for await (const chunk of ipfs.files.read(actualPath)) {
                             chunks.push(chunk)
                         }
-                        resolve([new ipfsFileData(concat(chunks)), null])
+                        resolve([new IPFSFileData(concat(chunks)), null])
                     })
                     .catch((error: Error) => {
                         resolve([null, error]);
@@ -141,35 +181,21 @@ export const useIPFSFolderState = (path: string): [
         })
     }
 
-    const ls = async (pathToList?: string): Promise<[IpfsFile[] | null, Error | null]> => {
+    const ls = async (pathToList?: string): Promise<[MFSEntry[] | null, Error | null | unknown]> => {
         return new Promise((resolve) => {
             if (isIpfsReady && ipfs) {
-                const actualPath = `${path}${pathToList ? pathToList : ""}`
-                ipfs.files.stat(actualPath)
-                    .then(async (data: any) => {
-                        const list: IpfsFile[] = []
-
-                        list.push({
-                            name: "parent",
-                            type: "directory",
-                            size: 0,
-                            hash: data?.cid.string
-                        })
-
+                (async ()=>{
+                    try {
+                        const actualPath = `${path}${pathToList ? pathToList : ""}`
+                        const list: MFSEntry[] = []
                         for await (const file of ipfs.files.ls(actualPath)) {
-                            const { name, type, size, cid } = file
-                            list.push({
-                                name,
-                                type,
-                                size,
-                                hash: cid.toString()
-                            })
+                            list.push(file)
                         }
                         resolve([list, null])
-                    })
-                    .catch((error: Error) => {
+                    } catch(error) {
                         resolve([null, error]);
-                    })
+                    }
+                })()
             } else {
                 resolve([null, new Error("Ipfs instance not started yet")]);
             }
