@@ -13,7 +13,7 @@ let ipfs: IPFS | null = null
 
 export const startIPFSInstance = (verbose: "silent" | "info" | "full" = "info") => {
     const [isIpfsReady, setIpfsReady] = useState(Boolean(ipfs))
-    const [,setInstance] = useStore('ipfsInstance', {
+    const [, setInstance] = useStore('ipfsInstance', {
         ipfs: undefined,
         isIpfsReady: false
     }) as ipfsInstance;
@@ -23,7 +23,7 @@ export const startIPFSInstance = (verbose: "silent" | "info" | "full" = "info") 
         return function cleanup() {
             if (ipfs && ipfs.stop) {
                 verbose == "info" || verbose == "full" ? console.log("Stopping IPFS") : null
-                ipfs.stop().catch((error: Error) => verbose == "full" ? console.log(`%c${error}`,"color:red") : null)
+                ipfs.stop().catch((error: Error) => verbose == "full" ? console.log(`%c${error}`, "color:red") : null)
                 ipfs = null
                 setIpfsReady(false)
             }
@@ -42,11 +42,11 @@ export const startIPFSInstance = (verbose: "silent" | "info" | "full" = "info") 
     const startIpfs = async () => {
         if (!ipfs) {
             try {
-                verbose == "info" || verbose == "full" ? console.log("%cIPFS Started", "color: green"): null
+                verbose == "info" || verbose == "full" ? console.log("%cIPFS Started", "color: green") : null
                 ipfs = await Ipfs.create()
             } catch (error) {
                 ipfs = null
-                verbose == "full" ? console.log(`%c${error}`,"color:red") : null
+                verbose == "full" ? console.log(`%c${error}`, "color:red") : null
             }
         }
 
@@ -133,7 +133,7 @@ export const useIPFSFolderState = (path: string): [
                         for await (const chunk of ipfs.files.read(actualPath)) {
                             chunks.push(chunk)
                         }
-                        resolve([new IPFSFileData(concat(chunks)), null])
+                        resolve([new IPFSFileData(concat(chunks), actualPath), null])
                     })
                     .catch((error: Error) => {
                         resolve([null, error]);
@@ -184,7 +184,7 @@ export const useIPFSFolderState = (path: string): [
     const ls = async (pathToList?: string): Promise<[MFSEntry[] | null, Error | null | unknown]> => {
         return new Promise((resolve) => {
             if (isIpfsReady && ipfs) {
-                (async ()=>{
+                (async () => {
                     try {
                         const actualPath = `${path}${pathToList ? pathToList : ""}`
                         const list: MFSEntry[] = []
@@ -192,7 +192,7 @@ export const useIPFSFolderState = (path: string): [
                             list.push(file)
                         }
                         resolve([list, null])
-                    } catch(error) {
+                    } catch (error) {
                         resolve([null, error]);
                     }
                 })()

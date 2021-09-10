@@ -97,12 +97,14 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="classes.IPFSFileData.html#content" class="tsd-kind-icon">content</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="classes.IPFSFileData.html#fileName" class="tsd-kind-icon">file<wbr>Name</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="classes.IPFSFileData.html#toBlob" class="tsd-kind-icon">to<wbr>Blob</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="classes.IPFSFileData.html#toFile" class="tsd-kind-icon">to<wbr>File</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="classes.IPFSFileData.html#toJSON" class="tsd-kind-icon">toJSON</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="classes.IPFSFileData.html#toObjectURL" class="tsd-kind-icon">to<wbr>ObjectURL</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="classes.IPFSFileData.html#toString" class="tsd-kind-icon">to<wbr>String</a></li>
@@ -117,19 +119,22 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new IPFSFile<wbr>Data<span class="tsd-signature-symbol">(</span>content<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes.IPFSFileData.html" class="tsd-signature-type" data-tsd-kind="Class">IPFSFileData</a></li>
+						<li class="tsd-signature tsd-kind-icon">new IPFSFile<wbr>Data<span class="tsd-signature-symbol">(</span>content<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span>, fileName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes.IPFSFileData.html" class="tsd-signature-type" data-tsd-kind="Class">IPFSFileData</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/classes/index.tsx:13</li>
+									<li>Defined in <a href="https://github.com/youaresoroman/react-ipfs/blob/5a57ee8/src/classes/index.tsx#L35">src/classes/index.tsx:35</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>content: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+								<li>
+									<h5>fileName: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="classes.IPFSFileData.html" class="tsd-signature-type" data-tsd-kind="Class">IPFSFileData</a></h4>
@@ -145,7 +150,17 @@
 					<div class="tsd-signature tsd-kind-icon">content<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8Array</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/classes/index.tsx:11</li>
+							<li>Defined in <a href="https://github.com/youaresoroman/react-ipfs/blob/5a57ee8/src/classes/index.tsx#L32">src/classes/index.tsx:32</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="fileName" class="tsd-anchor"></a>
+					<h3>file<wbr>Name</h3>
+					<div class="tsd-signature tsd-kind-icon">file<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/youaresoroman/react-ipfs/blob/5a57ee8/src/classes/index.tsx#L33">src/classes/index.tsx:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -162,10 +177,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/classes/index.tsx:26</li>
+									<li>Defined in <a href="https://github.com/youaresoroman/react-ipfs/blob/5a57ee8/src/classes/index.tsx#L56">src/classes/index.tsx:56</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Blob</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="toFile" class="tsd-anchor"></a>
+					<h3>to<wbr>File</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>File<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">File</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/youaresoroman/react-ipfs/blob/5a57ee8/src/classes/index.tsx#L40">src/classes/index.tsx:40</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">File</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -179,7 +211,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/classes/index.tsx:22</li>
+									<li>Defined in <a href="https://github.com/youaresoroman/react-ipfs/blob/5a57ee8/src/classes/index.tsx#L52">src/classes/index.tsx:52</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -190,15 +222,21 @@
 					<a name="toObjectURL" class="tsd-anchor"></a>
 					<h3>to<wbr>ObjectURL</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>ObjectURL<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>ObjectURL<span class="tsd-signature-symbol">(</span>blob<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Blob</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">File</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/classes/index.tsx:30</li>
+									<li>Defined in <a href="https://github.com/youaresoroman/react-ipfs/blob/5a57ee8/src/classes/index.tsx#L60">src/classes/index.tsx:60</a></li>
 								</ul>
 							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> blob: <span class="tsd-signature-type">Blob</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">File</span></h5>
+								</li>
+							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
@@ -213,7 +251,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/classes/index.tsx:17</li>
+									<li>Defined in <a href="https://github.com/youaresoroman/react-ipfs/blob/5a57ee8/src/classes/index.tsx#L47">src/classes/index.tsx:47</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -258,8 +296,14 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="classes.IPFSFileData.html#content" class="tsd-kind-icon">content</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="classes.IPFSFileData.html#fileName" class="tsd-kind-icon">file<wbr>Name</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="classes.IPFSFileData.html#toBlob" class="tsd-kind-icon">to<wbr>Blob</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="classes.IPFSFileData.html#toFile" class="tsd-kind-icon">to<wbr>File</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="classes.IPFSFileData.html#toJSON" class="tsd-kind-icon">toJSON</a>
@@ -274,6 +318,12 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/classes.html#getExtension" class="tsd-kind-icon">get<wbr>Extension</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="../modules/classes.html#getMime" class="tsd-kind-icon">get<wbr>Mime</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
