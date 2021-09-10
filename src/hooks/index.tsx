@@ -49,7 +49,6 @@ export const startIPFSInstance = (verbose: "silent" | "info" | "full" = "info") 
                 verbose == "full" ? console.log(`%c${error}`, "color:red") : null
             }
         }
-
         setIpfsReady(Boolean(ipfs))
     }
 
@@ -120,7 +119,7 @@ export const useIPFSFolderState = (path: string): [
                 })
         }
         return
-    }, [isIpfsReady])
+    }, [isIpfsReady, ipfs])
 
 
     const read = async (pathToRead: string): Promise<[IPFSFileData | null, Error | null]> => {
