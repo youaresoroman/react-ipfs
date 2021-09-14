@@ -55,7 +55,7 @@ export const startIPFSInstance = (verbose: "silent" | "info" | "full" = "info") 
     return
 }
 
-export function useIPFS() {
+export function useIPFS(verbose: "silent" | "info" | "full" = "info") {
     const [ipfs, setIPFS] = useState<IPFSDecorator>()
     const [isIpfsReady, setIpfsReady] = useState(false)
     const [instance] = useStore('ipfsInstance', {
@@ -65,7 +65,7 @@ export function useIPFS() {
 
     useEffect(() => {
         if (instance.isIpfsReady && instance.ipfs) {
-            setIPFS(new IPFSDecorator(instance.ipfs))
+            setIPFS(new IPFSDecorator(instance.ipfs, verbose))
             setIpfsReady(instance.isIpfsReady)
         }
     }, [instance])

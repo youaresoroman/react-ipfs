@@ -65,10 +65,12 @@ export class IPFSFileData {
 export class IPFSDecorator {
     original: IPFS;
     files: API;
+    verbose: "silent" | "info" | "full" = "info"
 
-    constructor(ipfs: IPFS) {
+    constructor(ipfs: IPFS, verbose: "silent" | "info" | "full" = "info") {
         this.original = ipfs
         this.files = this.original.files
+        this.verbose = verbose
     }
 
     ls = async (path: string): Promise<[IPFSEntry[] | null, Error | null | unknown]> => {
