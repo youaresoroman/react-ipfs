@@ -5,7 +5,7 @@ import { useStore } from "react-context-hook";
 import { ipfsInstance } from "../index.types";
 import { ipfsInstanceDecorator } from "../index.types"
 import { IPFSDecorator } from "../classes"
-import { MFSEntry } from "ipfs-core-types/src/files";
+import { MFSEntry, StatResult } from "ipfs-core-types/src/files";
 import { IPFSFileData } from "../classes";
 import { concat } from "uint8arrays";
 
@@ -162,7 +162,7 @@ export const useIPFSFolderState = (path: string): [
             if (isIpfsReady && ipfs) {
                 const actualPath = `${path}${pathToRead}`
                 ipfs.files.stat(actualPath)
-                    .then(async (data: any) => {
+                    .then(async (data: StatResult) => {
                         if (data) {
                             if (data.type != "directory") {
                                 new Error("Path is a file")
@@ -236,11 +236,11 @@ export const useIPFSFolderState = (path: string): [
                                 })
                                     .then(() => {
                                         ipfs.files.stat(path)
-                                            .then(async (data: any) => {
+                                            .then(async (data: StatResult) => {
                                                 if (data) {
                                                     setFolderHash(data.cid.toString())
                                                     ipfs.files.stat(file)
-                                                        .then(async (data: any) => {
+                                                        .then(async (data: StatResult) => {
                                                             if (data) {
                                                                 resolve([data.cid.toString(), null])
                                                             } else {
@@ -312,10 +312,10 @@ export const useIPFSFolderState = (path: string): [
                         .then(() => {
                             ipfs.files.stat(path)
                                 /* eslint-disable @typescript-eslint/no-explicit-any */
-                                .then(async (data: any) => {
+                                .then(async (data: StatResult) => {
                                     if (data) {
-                                        setFolderHash(data.cid.string)
-                                            resolve([true, null])
+                                        setFolderHash(data.cid.toString())
+                                        resolve([true, null])
                                     } else {
                                         new Error("Get folder hash error")
                                     }
