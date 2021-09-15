@@ -91,13 +91,18 @@ export const useIPFSFolderState = (path: string): [
     const { ipfs, isIpfsReady } = useIPFS();
 
     useEffect(() => {
+
         if (isIpfsReady && ipfs) {
             ipfs.files.stat(path)
                 .then(async (data: any) => {
-                    setFolderHash(data?.cid.string)
-
-                    if (data.type != "directory") {
-                        new Error("Path is a file")
+                    if (data) {
+                        if (data.type != "directory") {
+                            new Error("Path is a file")
+                        } else {
+                            setFolderHash(data.cid.toString())
+                        }
+                    } else {
+                        new Error("Get folder hash error")
                     }
                 })
                 .catch(() => {
@@ -107,7 +112,15 @@ export const useIPFSFolderState = (path: string): [
                         .then(() => {
                             ipfs.files.stat(path)
                                 .then(async (data: any) => {
-                                    setFolderHash(data?.cid.string)
+                                    if (data) {
+                                        if (data.type != "directory") {
+                                            new Error("Path is a file")
+                                        } else {
+                                            setFolderHash(data.cid.toString())
+                                        }
+                                    } else {
+                                        new Error("Get folder hash error")
+                                    }
                                 })
                                 .catch((error: Error) => {
                                     console.error(error);
@@ -150,7 +163,15 @@ export const useIPFSFolderState = (path: string): [
                 const actualPath = `${path}${pathToRead}`
                 ipfs.files.stat(actualPath)
                     .then(async (data: any) => {
-                        resolve([data?.cid.string, null])
+                        if (data) {
+                            if (data.type != "directory") {
+                                new Error("Path is a file")
+                            } else {
+                                resolve([data.cid.toString(), null])
+                            }
+                        } else {
+                            new Error("Get folder hash error")
+                        }
                     })
                     .catch((error: Error) => {
                         resolve([null, error]);
@@ -216,15 +237,23 @@ export const useIPFSFolderState = (path: string): [
                                     .then(() => {
                                         ipfs.files.stat(path)
                                             .then(async (data: any) => {
-                                                setFolderHash(data?.cid.string)
-
-                                                ipfs.files.stat(file)
-                                                    .then(async (data: any) => {
-                                                        resolve([data?.cid.string, null])
-                                                    })
-                                                    .catch((error: Error) => {
-                                                        resolve([null, error]);
-                                                    })
+                                                if (data) {
+                                                    setFolderHash(data.cid.toString())
+                                                    ipfs.files.stat(file)
+                                                        .then(async (data: any) => {
+                                                            if (data) {
+                                                                resolve([data.cid.toString(), null])
+                                                            } else {
+                                                                new Error("Get folder hash error")
+                                                            }
+                                                        })
+                                                        .catch((error: Error) => {
+                                                            resolve([null, error]);
+                                                        })
+                                                } else {
+                                                    new Error("Get folder hash error")
+                                                }
+                                                setFolderHash(data?.cid.toString())
                                             })
                                             .catch((error: Error) => {
                                                 resolve([null, error]);
@@ -284,8 +313,12 @@ export const useIPFSFolderState = (path: string): [
                             ipfs.files.stat(path)
                                 /* eslint-disable @typescript-eslint/no-explicit-any */
                                 .then(async (data: any) => {
-                                    setFolderHash(data?.cid.string)
-                                    resolve([true, null])
+                                    if (data) {
+                                        setFolderHash(data.cid.string)
+                                            resolve([true, null])
+                                    } else {
+                                        new Error("Get folder hash error")
+                                    }
                                 })
                                 .catch((error: Error) => {
                                     resolve([null, error]);
