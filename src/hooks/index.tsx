@@ -94,7 +94,7 @@ export const useIPFSFolderState = (path: string): [
 
         if (isIpfsReady && ipfs) {
             ipfs.files.stat(path)
-                .then(async (data: any) => {
+                .then(async (data: StatResult) => {
                     if (data) {
                         if (data.type != "directory") {
                             new Error("Path is a file")
@@ -111,7 +111,7 @@ export const useIPFSFolderState = (path: string): [
                     })
                         .then(() => {
                             ipfs.files.stat(path)
-                                .then(async (data: any) => {
+                                .then(async (data: StatResult) => {
                                     if (data) {
                                         if (data.type != "directory") {
                                             new Error("Path is a file")
@@ -153,7 +153,6 @@ export const useIPFSFolderState = (path: string): [
             } else {
                 resolve([null, new Error("Ipfs instance not started yet")]);
             }
-
         })
     }
 
