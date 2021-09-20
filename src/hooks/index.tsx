@@ -83,6 +83,7 @@ export const useIPFSFolderState = (path: string): [
         write: (fileName: string, content: string | Uint8Array | Blob | AsyncIterable<Uint8Array> | Iterable<Uint8Array>) => Promise<[string | null, Error | null]>,
         writeAll: (list: { fileName: string, content: string | Uint8Array | Blob | AsyncIterable<Uint8Array> | Iterable<Uint8Array> }[]) => Promise<[boolean, Error | null]>,
         rm: (path?: string) => Promise<[boolean | null, Error | null]>,
+        mkdir: (pathToMake: string) => Promise<[boolean | null, Error | null]>,
         mv: (originalPath: string, pathToMove: string) => Promise<[boolean, Error | null]>
     }
 ] => {
@@ -97,12 +98,12 @@ export const useIPFSFolderState = (path: string): [
                 .then(async (data: StatResult) => {
                     if (data) {
                         if (data.type != "directory") {
-                            new Error("Path is a file")
+                            throw new Error("Path is a file")
                         } else {
                             setFolderHash(data.cid.toString())
                         }
                     } else {
-                        new Error("Get folder hash error")
+                        throw new Error("Get folder hash error")
                     }
                 })
                 .catch(() => {
@@ -114,12 +115,12 @@ export const useIPFSFolderState = (path: string): [
                                 .then(async (data: StatResult) => {
                                     if (data) {
                                         if (data.type != "directory") {
-                                            new Error("Path is a file")
+                                            throw new Error("Path is a file")
                                         } else {
                                             setFolderHash(data.cid.toString())
                                         }
                                     } else {
-                                        new Error("Get folder hash error")
+                                        throw new Error("Get folder hash error")
                                     }
                                 })
                                 .catch((error: Error) => {
@@ -163,13 +164,9 @@ export const useIPFSFolderState = (path: string): [
                 ipfs.files.stat(actualPath)
                     .then(async (data: StatResult) => {
                         if (data) {
-                            if (data.type != "directory") {
-                                new Error("Path is a file")
-                            } else {
-                                resolve([data.cid.toString(), null])
-                            }
+                            resolve([data.cid.toString(), null])
                         } else {
-                            new Error("Get folder hash error")
+                            resolve([null, new Error("Get hash error")])
                         }
                     })
                     .catch((error: Error) => {
@@ -187,15 +184,33 @@ export const useIPFSFolderState = (path: string): [
                 const actualOriginalPath = `${path}${originalPath}`
                 const actualPathToMove = `${path}${pathToMove}`
 
-                ipfs.files.mv(actualOriginalPath, actualPathToMove, { parents: true }).then(() => {
-                    resolve([true, null]);
-                })
+                ipfs.files.mv(actualOriginalPath, actualPathToMove, { parents: true })
+                    .then(() => {
+                        resolve([true, null]);
+                    })
                     .catch((error: Error) => {
                         resolve([false, error]);
                     })
 
             } else {
                 resolve([false, new Error("Ipfs instance not started yet")]);
+            }
+        })
+    }
+
+    const mkdir = async (pathToMake: string): Promise<[boolean | null, Error | null]> => {
+        return new Promise((resolve) => {
+            if (isIpfsReady && ipfs) {
+                const actualPath = `${path}${pathToMake}`
+                ipfs.files.mkdir(actualPath, { parents: true })
+                    .then(() => {
+                        resolve([true, null]);
+                    })
+                    .catch((error: Error) => {
+                        resolve([false, error]);
+                    })
+            } else {
+                resolve([null, new Error("Ipfs instance not started yet")]);
             }
         })
     }
@@ -243,14 +258,14 @@ export const useIPFSFolderState = (path: string): [
                                                             if (data) {
                                                                 resolve([data.cid.toString(), null])
                                                             } else {
-                                                                new Error("Get folder hash error")
+                                                                resolve([null, new Error("Get folder hash error")])
                                                             }
                                                         })
                                                         .catch((error: Error) => {
                                                             resolve([null, error]);
                                                         })
                                                 } else {
-                                                    new Error("Get folder hash error")
+                                                    resolve([null, new Error("Get folder hash error")])
                                                 }
                                                 setFolderHash(data?.cid.toString())
                                             })
@@ -316,7 +331,7 @@ export const useIPFSFolderState = (path: string): [
                                         setFolderHash(data.cid.toString())
                                         resolve([true, null])
                                     } else {
-                                        new Error("Get folder hash error")
+                                        resolve([null, new Error("Get folder hash error")])
                                     }
                                 })
                                 .catch((error: Error) => {
@@ -358,6 +373,7 @@ export const useIPFSFolderState = (path: string): [
             write,
             writeAll,
             rm,
+            mkdir,
             mv
         }
     ]
