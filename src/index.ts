@@ -1,15 +1,6 @@
-import IPFS from "ipfs-core/src/components"
-import {  startIPFSInstance, useIPFSFolderState, useIPFS } from "./hooks"
-import { IPFSFileData } from "./classes";
-import { IPFSEntry } from "ipfs-core-types/src/root"
-import { MFSEntry } from "ipfs-core-types/src/files";
-
-export {
-    useIPFS,
-    startIPFSInstance,
-    useIPFSFolderState,
-    IPFS,
-    IPFSFileData,
-    IPFSEntry,
-    MFSEntry
-}
+export * as IPFS from "ipfs-core"
+export * from "./classes"
+export * from "./context"
+export * from "./functions"
+export * from "./hooks"
+export * from "./types"

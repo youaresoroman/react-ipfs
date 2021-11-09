@@ -1,9 +1,26 @@
 {
   // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
-  "include": ["src", "types"],
+  "include": [
+    "src",
+    "types"
+  ],
+  "typedocOptions": {
+    "entryPoints": [
+      "./src/classes",
+      "./src/context",
+      "./src/hooks",
+      "./src/functions",
+      "./src/types",
+    ],
+    "out": "doc",
+    "pretty": true
+  },
   "compilerOptions": {
     "module": "esnext",
-    "lib": ["esnext","DOM"],
+    "lib": [
+      "esnext",
+      "DOM"
+    ],
     "importHelpers": true,
     // output .d.ts declaration files for consumers
     "declaration": true,
