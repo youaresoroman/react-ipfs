@@ -2,27 +2,7 @@ import IPFS from "ipfs-core/src/components"
 import { API } from "ipfs-core-types/src/files"
 import { concat } from "uint8arrays"
 import { IPFSEntry } from "ipfs-core-types/src/root"
-
-export function getMime(extension: string) {
-    return (
-        ({
-            "svg": "image/svg+xml",
-            "webp": "image/webp",
-            "png": "image/png",
-            "jpeg": "image/jpeg",
-            "jpg": "image/jpeg",
-            "jfif": "image/jpeg",
-            "pjpeg": "image/jpeg",
-            "pjp": "image/jpeg",
-            "gif": "image/gif",
-            "avif": "image/avif",
-            "apng": "image/apng"
-        } as any)[extension] || "")
-}
-
-export function getExtension(url: string) {
-    return url.slice((url.lastIndexOf(".") - 1 >>> 0) + 2)
-}
+import { getExtension, getMime } from "../functions";
 
 /**
  * Class for easy operation with Uin8Array data

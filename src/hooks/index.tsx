@@ -1,78 +1,8 @@
-import Ipfs from "ipfs"
-import IPFS from "ipfs-core/src/components"
 import { useEffect, useState } from "react";
-import { useStore } from "react-context-hook";
-import { ipfsInstance } from "../index.types";
-import { ipfsInstanceDecorator } from "../index.types"
-import { IPFSDecorator } from "../classes"
 import { MFSEntry, StatResult } from "ipfs-core-types/src/files";
 import { IPFSFileData } from "../classes";
 import { concat } from "uint8arrays";
-
-let ipfs: IPFS | null = null
-
-export const startIPFSInstance = (verbose: "silent" | "info" | "full" = "info") => {
-    const [isIpfsReady, setIpfsReady] = useState(Boolean(ipfs))
-    const [, setInstance] = useStore('ipfsInstance', {
-        ipfs: undefined,
-        isIpfsReady: false
-    }) as ipfsInstance;
-
-    useEffect(() => {
-        startIpfs()
-        return function cleanup() {
-            if (ipfs && ipfs.stop) {
-                verbose == "info" || verbose == "full" ? console.log("Stopping IPFS") : null
-                ipfs.stop().catch((error: Error) => verbose == "full" ? console.log(`%c${error}`, "color:red") : null)
-                ipfs = null
-                setIpfsReady(false)
-            }
-        }
-    }, [])
-
-    useEffect(() => {
-        if (ipfs) {
-            setInstance({
-                ipfs,
-                isIpfsReady
-            })
-        }
-    }, [isIpfsReady])
-
-    const startIpfs = async () => {
-        if (!ipfs) {
-            try {
-                verbose == "info" || verbose == "full" ? console.log("%cIPFS Started", "color: green") : null
-                ipfs = await Ipfs.create()
-            } catch (error) {
-                ipfs = null
-                verbose == "full" ? console.log(`%c${error}`, "color:red") : null
-            }
-        }
-        setIpfsReady(Boolean(ipfs))
-    }
-
-    return
-}
-
-export function useIPFS(verbose: "silent" | "info" | "full" = "info") {
-    const [ipfs, setIPFS] = useState<IPFSDecorator>()
-    const [isIpfsReady, setIpfsReady] = useState(false)
-    const [instance] = useStore('ipfsInstance', {
-        ipfs: undefined,
-        isIpfsReady: false
-    }) as ipfsInstanceDecorator;
-
-    useEffect(() => {
-        if (instance.isIpfsReady && instance.ipfs) {
-            setIPFS(new IPFSDecorator(instance.ipfs, verbose))
-            setIpfsReady(instance.isIpfsReady)
-        }
-    }, [instance])
-
-    return { ipfs, isIpfsReady }
-}
-
+import { useIPFS } from "../context/ipfs";
 
 export const useIPFSFolderState = (path: string): [
     string,
