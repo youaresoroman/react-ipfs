@@ -6,7 +6,7 @@ import { IPFSProvider } from "@lib"
 
 ReactDOM.render(
   <React.StrictMode>
-    <IPFSProvider>
+    <IPFSProvider fallback={<>LOADiNG</>}>
       <App />
     </IPFSProvider>
   </React.StrictMode>,

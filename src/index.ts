@@ -1,4 +1,3 @@
-export * as IPFS from "ipfs-core"
 export * from "./classes"
 export * from "./context"
 export * from "./functions"

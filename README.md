@@ -23,6 +23,33 @@ yarn add react-ipfs
 ```
 ## Documentation
 TSDoc compiled documentation is [here](https://youaresoroman.github.io/react-ipfs/)
+
+## Usage
+
+src/index.tsx
+```js
+import { IPFSProvider } from "react-ipfs"
+
+....
+    <IPFSProvider fallback={<>LOADING</>}>
+      <App />
+    </IPFSProvider>
+...
+```
+
+src/App.tsx
+```js
+import { useIPFS } from '@lib';
+
+function App() {
+  const ipfs = useIPFS()
+
+  useEffect(()=>{
+      ipfs.node.id().then(console.log);
+  },[])
+
+...
+```
 ## Contribute
 
 Please see the [contributing guidelines](./CONTRIBUTING.md)

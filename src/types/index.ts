@@ -1,2 +1,1 @@
-export * from "./ipfsInstanceDecorator"
-export * from "./ipfsInterface"
+export * from "./IPFSContext"

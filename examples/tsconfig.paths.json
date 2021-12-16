@@ -6,7 +6,7 @@
                 "./src"
             ],
             "@lib": [
-                "../dist/index.js"
+                "../dist/react-ipfs.esm.js"
             ]
         }
     }
