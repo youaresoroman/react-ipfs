@@ -1,42 +1,7 @@
 {
-  "version": "0.3.0",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/types/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
-  "engines": {
-    "node": ">=10"
-  },
-  "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "size": "size-limit",
-    "analyze": "size-limit --why",
-    "start:examples": "cd examples && npm start",
-    "install:examples": "cd examples && npm install",
-    "documentation": "npx typedoc"
-  },
-  "peerDependencies": {
-    "react": ">=16"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
   "name": "react-ipfs",
+  "version": "0.4.4",
+  "license": "MIT",
   "author": "Roman Yankowski",
   "repository": {
     "type": "git",
@@ -46,48 +11,57 @@
     "React",
     "Component",
     "Library",
-    "Rollup",
+    "Vite",
     "Typescript",
     "User Interface",
-    "Storybook",
     "IPFS"
   ],
   "bugs": {
     "url": "https://github.com/youaresoroman/react-ipfs/issues"
   },
   "homepage": "https://github.com/youaresoroman/react-ipfs#readme",
-  "module": "dist/react-ipfs.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/react-ipfs.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/react-ipfs.esm.js",
-      "limit": "10 KB"
-    }
-  ],
-  "devDependencies": {
-    "@size-limit/preset-small-lib": "^5.0.3",
-    "@types/react": "^17.0.34",
-    "@types/react-dom": "^17.0.11",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "husky": "^7.0.2",
-    "prettier": "^2.4.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "size-limit": "^5.0.3",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.3.1",
-    "typedoc": "^0.22.3",
-    "typescript": "^4.4.4"
+  "scripts": {
+    "dev": "vite",
+    "watch": "tsc --watch & vite build --watch",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "prepare": "tsc && vite build",
+    "prepublish": "tsc && vite build"
   },
   "dependencies": {
-    "bootstrap": "^5.1.3",
-    "gulp": "^4.0.2",
-    "ipfs": "^0.60.2",
-    "react-bootstrap": "^2.0.3",
-    "uint8arrays": "^3.0.0"
+    "eslint": "8.36.0",
+    "ipfs-core": "^0.18.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "prom-client": "^14.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.15.3",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "ipfs-core-types": "^0.14.0",
+    "@vitejs/plugin-react": "3.1.0",
+    "json": "11.0.0",
+    "typescript": "5.0.2",
+    "vite": "4.2.0",
+    "vite-plugin-dts": "2.1.0"
+  },
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "prom-client": "^14.1.0",
+    "ipfs-core": "^0.11.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/my-lib.umd.js",
+  "module": "./dist/my-lib.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/my-lib.es.js",
+      "require": "./dist/my-lib.umd.js"
+    }
   }
 }
