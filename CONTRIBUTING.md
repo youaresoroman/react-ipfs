@@ -16,4 +16,3 @@ It is also always helpful to have some context for your pull request. What was t
 ## Questions
 
 If you have any questions, create an [issue](https://github.com/youaresoroman/react-ipfs/issues) (protip: do a quick search first to see if someone else didn't ask the same question before!).
-You can also reach by [telegram group](https://t.me/react_ipfs) or #ipfs-awesome:matrix.org
