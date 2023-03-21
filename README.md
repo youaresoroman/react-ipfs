@@ -26,8 +26,9 @@ npm install react-ipfs
 ```bash
 yarn add react-ipfs
 ```
+
 ## Documentation
-TSDoc compiled documentation is [here](https://youaresoroman.github.io/react-ipfs/)
+IPFS core documentation is [here](https://github.com/ipfs/js-ipfs/tree/master/docs/core-api)
 
 ## Usage
 
@@ -44,13 +45,13 @@ import { IPFSProvider } from "react-ipfs"
 
 src/App.tsx
 ```js
-import { useIPFS } from '@lib';
+import { useIPFS } from "react-ipfs";
 
 function App() {
   const ipfs = useIPFS()
 
   useEffect(()=>{
-      ipfs.node.id().then(console.log);
+      ipfs.id().then(console.log);
   },[])
 
 ...
